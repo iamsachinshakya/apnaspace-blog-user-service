@@ -1,8 +1,5 @@
-import dotenv from "dotenv";
 import { z } from "zod";
 import { Environment, LogLevel } from "./constants";
-
-dotenv.config();
 
 // Define & validate environment schema
 const envSchema = z.object({
