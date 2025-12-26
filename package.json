@@ -24,7 +24,6 @@
     "type": "git",
     "url": "https://github.com/yourusername/user-service.git"
   },
-  "packageManager": "pnpm@10.18.3",
   "dependencies": {
     "bcryptjs": "^3.0.3",
     "cloudinary": "^2.8.0",
