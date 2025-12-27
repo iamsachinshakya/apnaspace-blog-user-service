@@ -7,9 +7,10 @@ export const PERMISSIONS = {
     USER: {
         CREATE: "user:create",
         READ: "user:read",
+        READ_ALL: "user:read_all",
         UPDATE: "user:update",
         DELETE: "user:delete",
-        CHANGE_PASSWORD: "user:change_password",
+
     },
     BLOG: {
         CREATE: "blog:create",
@@ -64,6 +65,5 @@ export const RolePermissions: Record<UserRole, Set<string>> = {
         PERMISSIONS.BLOG.READ,
         PERMISSIONS.COMMENT.CREATE,
         PERMISSIONS.COMMENT.READ,
-        PERMISSIONS.AUTH.CHANGE_PASSWORD
     ]),
 };

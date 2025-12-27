@@ -10,6 +10,7 @@ import { uploadSingle } from "../middleware/upload.middleware";
 import { authenticate } from "../../auth/middlewares/auth.middleware";
 import { authorize } from "../../permissions/middlewares/authorize.middleware";
 import { PERMISSIONS } from "../../permissions/constants/permission";
+import { authorizeUserAction } from "../../permissions/middlewares/authorizeUserAction.middleware";
 
 export const userRouter = Router();
 
@@ -26,6 +27,7 @@ const userController = new UserController(userService);
 userRouter.get(
   "/profile/:id",
   authenticate,
+  authorizeUserAction(),
   asyncHandler(userController.getUserProfile.bind(userController))
 );
 
@@ -37,7 +39,7 @@ userRouter.get(
 userRouter.get(
   "/",
   authenticate,
-  authorize(PERMISSIONS.USER.READ),
+  authorize(PERMISSIONS.USER.READ_ALL),
   asyncHandler(userController.getAll.bind(userController))
 );
 
@@ -50,6 +52,7 @@ userRouter.get(
   "/:id",
   authenticate,
   authorize(PERMISSIONS.USER.READ),
+  authorizeUserAction(),
   asyncHandler(userController.getById.bind(userController))
 );
 
@@ -62,6 +65,7 @@ userRouter.delete(
   "/:id",
   authenticate,
   authorize(PERMISSIONS.USER.DELETE),
+  authorizeUserAction(),
   asyncHandler(userController.delete.bind(userController))
 );
 
@@ -74,6 +78,7 @@ userRouter.patch(
   "/:id",
   authenticate,
   authorize(PERMISSIONS.USER.UPDATE),
+  authorizeUserAction(),
   validateBody(updateUserSchema),
   asyncHandler(userController.updateAccountDetails.bind(userController))
 );
@@ -87,6 +92,7 @@ userRouter.patch(
   "/:id/avatar",
   authenticate,
   authorize(PERMISSIONS.USER.UPDATE),
+  authorizeUserAction(),
   uploadSingle("avatar"),
   validateFileSchema(imageSchema),
   asyncHandler(userController.updateAvatar.bind(userController))
@@ -124,7 +130,6 @@ userRouter.delete(
 userRouter.get(
   "/:id/followers",
   authenticate,
-  authorize(PERMISSIONS.USER.READ),
   asyncHandler(userController.getFollowers.bind(userController))
 );
 
@@ -136,6 +141,5 @@ userRouter.get(
 userRouter.get(
   "/:id/following",
   authenticate,
-  authorize(PERMISSIONS.USER.READ),
   asyncHandler(userController.getFollowing.bind(userController))
 );
